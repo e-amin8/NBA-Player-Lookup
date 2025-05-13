@@ -11,7 +11,9 @@ const PlayerTable: React.FC<PlayerTableProps> = ({ query }) => {
     const [players, setPlayers] = useState<Player[]>([]);
 
     useEffect(() => {
-        const fetchy = async() => {setPlayers(await fetchSearch(query))};
+        const fetchy = async() => {
+            setPlayers(await fetchSearch(query));
+        };
         fetchy().catch((error) => console.error('Error fetching data: ', error));
     }, [query]);
 

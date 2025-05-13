@@ -13,7 +13,7 @@ interface PlayerDetailsProps {
 const PlayerDetails: React.FC<PlayerDetailsProps> = ({ params }) => {
   const playerId = parseInt(params.id, 10); // Convert id to a number
 
-  const [season, setSeason] = useState<string>('2022'); // State for selected season
+  const [season, setSeason] = useState<string>('2024'); // State for selected season
   const [stats, setStats] = useState<Games>(); // State for player stats
   const [averages, setAverages] = useState<Averages>();
 
@@ -29,7 +29,7 @@ const PlayerDetails: React.FC<PlayerDetailsProps> = ({ params }) => {
     }
   }, [playerId, season]);
 
-  const seasons = ['2022', '2021', '2020', '2019'];
+  const seasons = ['2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015'];
 
   return (
     <div className="container mx-auto p-4">

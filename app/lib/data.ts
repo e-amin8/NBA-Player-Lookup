@@ -1,26 +1,22 @@
 import { Games, SearchResult } from "./definitions";
 // import { Player } from './definitions';
 
-export async function fetchSearch(query: string) {
-    const url = 'https://api-nba-v1.p.rapidapi.com/players?search='+query;
-    const options = {
-	method: 'GET',
-	headers: {
-		'x-rapidapi-key': 'efd5dad86amsh191b5ac339bfc84p14d357jsn06b7efbe421c',
-		'x-rapidapi-host': 'api-nba-v1.p.rapidapi.com'
-	    }
-    };
-
-    const fetchSearchy = async () => {
-        const response = await fetch(url, options);
-        const data: SearchResult = await response.json();
-
-        console.log("Searching query: " + query);
-
-        return data.response;
+function getApiKey(): string {
+    const key = process.env.KEY;
+    console.log(key);
+    if(!key) {
+        throw new Error('API key error - check .env.local file');
     }
-    return fetchSearchy();
 
+    return key;
+}
+
+export async function fetchSearch(query: string) {
+    const res = await fetch(`/api/playerSearch?query=${query}`);
+    if (!res.ok) throw new Error("Failed to fetch player data");
+    const data = await res.json()
+    console.log(data);
+    return data.response || [];
 }
 
 export async function fetchID(id: number) {
@@ -28,7 +24,7 @@ export async function fetchID(id: number) {
     const options = {
         method: 'GET',
         headers: {
-            'x-rapidapi-key': 'efd5dad86amsh191b5ac339bfc84p14d357jsn06b7efbe421c',
+            'x-rapidapi-key': getApiKey(),
             'x-rapidapi-host': 'api-nba-v1.p.rapidapi.com'
         }
     };
@@ -45,22 +41,9 @@ export async function fetchID(id: number) {
 }
 
 export async function fetchPlayerSeasonStats(id: number, season: string) {
-    const url = 'https://api-nba-v1.p.rapidapi.com/players/statistics?id=' + id + '&season=' + season;
-    const options = {
-	    method: 'GET',
-	    headers: {
-            'x-rapidapi-key': 'efd5dad86amsh191b5ac339bfc84p14d357jsn06b7efbe421c',
-            'x-rapidapi-host': 'api-nba-v1.p.rapidapi.com'
-	    }
-    };
-
-    const fetchPlayerSeasonStatsy = async () => {
-        const response = await fetch(url, options);
-        const data = await response.json();
-        const games: Games = data;
-        console.log("Searching for stats (id: " + id + " season: " + season + ")");
-
-        return games;
-    }
-    return fetchPlayerSeasonStatsy();
+    const res = await fetch(`/api/seasonSearch?playerId=${id}&season=${season}`);
+    if (!res.ok) throw new Error("Failed to fetch player stats");
+    const data = await res.json();
+    console.log("Returned season stats:", data); // <--- ADD THIS
+    return data; // Assuming the response structure matches
 }
