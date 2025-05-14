@@ -27,7 +27,17 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Examples
 
 #### Search
+
+Search by player last name. Partial completion will work. Produces list of results with clickable names that lead to player data.
+
 ![Screenshot of searching](../../../Desktop/Work/jobs/github_docs/search.png)
+
+#### Player Data
+
+Again, this page is routed when you select a player from the list produced by a search. This displays season average of main stats (points, rebounds and assists). Additionally, it generates a graph that shows per game performance. This page is interactable by selecting the year dropdown and choosing a year. The page will dynamically update utilizing React's use effect function.
+
+![Screenshot of player data](../../../Desktop/Work/jobs/github_docs/playerdata.png)
+
 
 ## Learn More
 
